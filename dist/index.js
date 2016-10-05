@@ -20,6 +20,9 @@ exports.default = _react2.default.createClass({
   getInitialState: function getInitialState() {
     return { open: false };
   },
+  onHTMLClick: function onHTMLClick() {
+    this.setState({ open: false });
+  },
   componentDidUpdate: function componentDidUpdate() {
     var $this = (0, _jquery2.default)(this.refs.root);
     (0, _jquery2.default)(this.refs.select).selectpicker('refresh');
@@ -28,6 +31,7 @@ exports.default = _react2.default.createClass({
   },
   componentWillUnmount: function componentWillUnmount() {
     var $this = (0, _jquery2.default)(this.refs.root);
+    (0, _jquery2.default)('html').off('click', this.onHTMLClick);
     $this.find('button').off('click');
     $this.find('.dropdown-menu').off('click');
   },
@@ -37,14 +41,18 @@ exports.default = _react2.default.createClass({
     var $this = (0, _jquery2.default)(this.refs.root);
     (0, _jquery2.default)(this.refs.select).selectpicker();
 
+    (0, _jquery2.default)('html').on('click', this.onHTMLClick);
+
     $this.find('button').on('click', function (e) {
       e.stopPropagation();
-      _this.setState({ open: !_this.state.open });
+      var open = !_this.state.open;
+      _this.setState({ open: open });
     });
 
     $this.find('.dropdown-menu').on('click', 'li a', function () {
       if (_this.props.multiple) return;
-      _this.setState({ open: !_this.state.open });
+      var open = !_this.state.open;
+      _this.setState({ open: open });
     });
   },
 
