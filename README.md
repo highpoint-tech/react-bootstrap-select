@@ -18,7 +18,13 @@ import { createElement as t } from 'react';
 import { render } from 'react-dom';
 import 'bootstrap-select';
 
-const el = t(Select, null,
+const el = t(Select, {
+  bs: {
+    // use bs prop to pass options to the bootstrap-select plugin
+    mobile: true
+  },
+  name: 'my-select'
+},
   t('option', { value: 1 }, '1 Minute'),
   t('option', { value: 2 }, '2 Minutes')
 );
@@ -28,3 +34,18 @@ render(el, document.querySelector('.app-container'));
 
 Refer to [experiment]() for a full example of this component working.
 You can run it with `npm run experiment`.
+
+## events
+
+Pass any of the following events as props:
+
+- `onShow`
+- `onShown`
+- `onHide`
+- `onHidden`
+- `onLoaded`
+- `onRendered`
+- `onRefreshed`
+- `onChanged`
+
+Documentation [here](https://silviomoreto.github.io/bootstrap-select/options/#events)
