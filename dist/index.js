@@ -88,6 +88,7 @@ var ReactBS = (0, _react.createClass)({
 
     $this.find('button').on('click', function (e) {
       e.stopPropagation();
+      if ($select.is(':disabled')) return;
       var open = !_this.state.open;
       _this.setState({ open: open });
     });
