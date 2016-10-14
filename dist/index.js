@@ -41,7 +41,7 @@ var ReactBS = (0, _react.createClass)({
     this.setState({ open: false });
   },
   handleBsEvents: function handleBsEvents() {
-    var $select = (0, _jquery2.default)(this.refs.select);
+    var $select = (0, _jquery2.default)(this.select);
     var eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(function (event) {
@@ -53,7 +53,7 @@ var ReactBS = (0, _react.createClass)({
     });
   },
   cancelBsEvents: function cancelBsEvents() {
-    var $select = (0, _jquery2.default)(this.refs.select);
+    var $select = (0, _jquery2.default)(this.select);
     var eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(function (event) {
@@ -63,13 +63,13 @@ var ReactBS = (0, _react.createClass)({
     });
   },
   componentDidUpdate: function componentDidUpdate() {
-    var $this = (0, _jquery2.default)(this.refs.root);
-    (0, _jquery2.default)(this.refs.select).selectpicker('refresh');
+    var $this = (0, _jquery2.default)(this.container);
+    (0, _jquery2.default)(this.select).selectpicker('refresh');
     var $select = $this.find('div.bootstrap-select');
     $select.toggleClass('open', this.state.open);
   },
   componentWillUnmount: function componentWillUnmount() {
-    var $this = (0, _jquery2.default)(this.refs.root);
+    var $this = (0, _jquery2.default)(this.container);
     this.cancelBsEvents();
     (0, _jquery2.default)('html').off('click', this.onHTMLClick);
     $this.find('button').off('click');
@@ -78,8 +78,8 @@ var ReactBS = (0, _react.createClass)({
   componentDidMount: function componentDidMount() {
     var _this = this;
 
-    var $this = (0, _jquery2.default)(this.refs.root);
-    var $select = (0, _jquery2.default)(this.refs.select);
+    var $this = (0, _jquery2.default)(this.container);
+    var $select = (0, _jquery2.default)(this.select);
     $select.selectpicker(this.props.bs);
 
     this.handleBsEvents();
@@ -100,7 +100,13 @@ var ReactBS = (0, _react.createClass)({
     });
   },
   render: function render() {
-    return (0, _react.createElement)('div', { ref: 'root' }, (0, _react.createElement)('select', _extends({ ref: 'select' }, cleanupSelectProps(this.props))));
+    var _this2 = this;
+
+    return (0, _react.createElement)('div', { ref: function ref(container) {
+        return _this2.container = container;
+      } }, (0, _react.createElement)('select', _extends({ ref: function ref(select) {
+        return _this2.select = select;
+      } }, cleanupSelectProps(this.props))));
   }
 });
 
