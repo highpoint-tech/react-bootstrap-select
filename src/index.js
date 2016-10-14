@@ -22,7 +22,7 @@ const ReactBS = createClass({
     this.setState({ open: false });
   },
   handleBsEvents() {
-    const $select = $(this.refs.select);
+    const $select = $(this.select);
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(event => {
@@ -32,7 +32,7 @@ const ReactBS = createClass({
     });
   },
   cancelBsEvents() {
-    const $select = $(this.refs.select);
+    const $select = $(this.select);
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(event => {
@@ -42,21 +42,21 @@ const ReactBS = createClass({
     });
   },
   componentDidUpdate() {
-    const $this = $(this.refs.root);
-    $(this.refs.select).selectpicker('refresh');
+    const $this = $(this.container);
+    $(this.select).selectpicker('refresh');
     var $select = $this.find('div.bootstrap-select');
     $select.toggleClass('open', this.state.open);
   },
   componentWillUnmount() {
-    const $this = $(this.refs.root);
+    const $this = $(this.container);
     this.cancelBsEvents();
     $('html').off('click', this.onHTMLClick);
     $this.find('button').off('click');
     $this.find('.dropdown-menu').off('click');
   },
   componentDidMount() {
-    const $this = $(this.refs.root);
-    const $select = $(this.refs.select);
+    const $this = $(this.container);
+    const $select = $(this.select);
     $select.selectpicker(this.props.bs);
 
     this.handleBsEvents();
@@ -78,8 +78,8 @@ const ReactBS = createClass({
   },
   render() {
     return (
-      t('div', { ref: 'root' },
-        t('select', { ref: 'select', ...cleanupSelectProps(this.props) })
+      t('div', { ref: container => (this.container = container) },
+        t('select', { ref: select => (this.select = select), ...cleanupSelectProps(this.props) })
       )
     );
   }
