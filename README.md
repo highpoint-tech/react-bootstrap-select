@@ -23,6 +23,10 @@ const el = t(Select, {
     // use bs prop to pass options to the bootstrap-select plugin
     mobile: true
   },
+  // pass props for the container
+  container: {
+    className: 'bootstrap-select-container'
+  },
   name: 'my-select'
 },
   t('option', { value: 1 }, '1 Minute'),

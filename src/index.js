@@ -10,6 +10,7 @@ const prefixEvent = event => `on${capitalizeFirstLetter(event)}`;
 const cleanupSelectProps = obj => {
   const newObj = { ...obj };
   delete newObj.bs;
+  delete newObj.container;
   delete newObj['bs-events'];
   return newObj;
 };
@@ -78,7 +79,7 @@ const ReactBS = createClass({
   },
   render() {
     return (
-      t('div', { ref: container => (this.container = container) },
+      t('div', { ref: container => (this.container = container), ...this.props.container },
         t('select', { ref: select => (this.select = select), ...cleanupSelectProps(this.props) })
       )
     );
