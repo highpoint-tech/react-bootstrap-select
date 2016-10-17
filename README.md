@@ -23,11 +23,16 @@ const el = t(Select, {
     // use bs prop to pass options to the bootstrap-select plugin
     mobile: true
   },
+  'bs-events': {
+    onChanged: ev => console.log('changed!', ev.target.value)
+  },
   // pass props for the container
   container: {
     className: 'bootstrap-select-container'
   },
-  name: 'my-select'
+  // rest of the props go to the select
+  name: 'my-select',
+  multiple: true
 },
   t('option', { value: 1 }, '1 Minute'),
   t('option', { value: 2 }, '2 Minutes')
@@ -41,7 +46,7 @@ You can run it with `npm run experiment`.
 
 ## events
 
-Pass any of the following events as props:
+Pass any of the following events to the `bs-events` prop:
 
 - `onShow`
 - `onShown`
