@@ -29,6 +29,7 @@ var prefixEvent = function prefixEvent(event) {
 var cleanupSelectProps = function cleanupSelectProps(obj) {
   var newObj = _extends({}, obj);
   delete newObj.bs;
+  delete newObj.container;
   delete newObj['bs-events'];
   return newObj;
 };
@@ -102,9 +103,9 @@ var ReactBS = (0, _react.createClass)({
   render: function render() {
     var _this2 = this;
 
-    return (0, _react.createElement)('div', { ref: function ref(container) {
+    return (0, _react.createElement)('div', _extends({ ref: function ref(container) {
         return _this2.container = container;
-      } }, (0, _react.createElement)('select', _extends({ ref: function ref(select) {
+      } }, this.props.container), (0, _react.createElement)('select', _extends({ ref: function ref(select) {
         return _this2.select = select;
       } }, cleanupSelectProps(this.props))));
   }
