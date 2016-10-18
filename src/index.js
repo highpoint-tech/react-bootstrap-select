@@ -47,7 +47,7 @@ const ReactBS = createClass({
   },
   componentDidUpdate() {
     this.$select.selectpicker('refresh');
-    const $bsSelect = this.$container.find('div.bootstrap-select');
+    const $bsSelect = this.$container.find('> .bootstrap-select');
     $bsSelect.toggleClass('open', this.state.open);
   },
   componentWillUnmount() {
