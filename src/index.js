@@ -19,59 +19,58 @@ const ReactBS = createClass({
   getInitialState() {
     return { open: false };
   },
+  getDefaultProps() {
+    return {
+      bs: {}
+    };
+  },
   onHTMLClick() {
     this.setState({ open: false });
   },
   handleBsEvents() {
-    const $select = $(this.select);
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(event => {
       const fn = eventsProp[prefixEvent(event)];
       if (fn === undefined) return;
-      $select.on(`${event}.bs.select`,(...args) => fn(...args));
+      this.$select.on(`${event}.bs.select`,(...args) => fn(...args));
     });
   },
   cancelBsEvents() {
-    const $select = $(this.select);
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(event => {
       const fn = eventsProp[prefixEvent(event)];
       if (fn === undefined) return;
-      $select.off(`${event}.bs.select`, fn);
+      this.$select.off(`${event}.bs.select`, fn);
     });
   },
   componentDidUpdate() {
-    const $this = $(this.container);
-    $(this.select).selectpicker('refresh');
-    var $select = $this.find('div.bootstrap-select');
-    $select.toggleClass('open', this.state.open);
+    this.$select.selectpicker('refresh');
+    const $bsSelect = this.$container.find('div.bootstrap-select');
+    $bsSelect.toggleClass('open', this.state.open);
   },
   componentWillUnmount() {
-    const $this = $(this.container);
     this.cancelBsEvents();
     $('html').off('click', this.onHTMLClick);
-    $this.find('button').off('click');
-    $this.find('.dropdown-menu').off('click');
+    this.$root.find('button').off('click');
+    this.$container.off('click');
   },
   componentDidMount() {
-    const $this = $(this.container);
-    const $select = $(this.select);
-    $select.selectpicker(this.props.bs);
-
+    this.$container = this.props.bs.container ? $(this.props.bs.container) : this.$root;
+    this.$select.selectpicker(this.props.bs);
     this.handleBsEvents();
 
     $('html').on('click', this.onHTMLClick);
 
-    $this.find('button').on('click', e => {
+    this.$root.find('button').on('click', e => {
       e.stopPropagation();
-      if ($select.is(':disabled')) return;
+      if (this.$select.is(':disabled')) return;
       const open = !this.state.open;
       this.setState({ open });
     });
 
-    $this.find('.dropdown-menu').on('click', 'li a', () => {
+    this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', () => {
       if (this.props.multiple) return;
       const open = !this.state.open;
       this.setState({ open });
@@ -79,8 +78,14 @@ const ReactBS = createClass({
   },
   render() {
     return (
-      t('div', { ref: container => (this.container = container), ...this.props.container },
-        t('select', { ref: select => (this.select = select), ...cleanupSelectProps(this.props) })
+      t('div', {
+        ref: container => (this.$root = $(container)),
+        ...this.props.container
+      },
+        t('select', {
+          ref: select => (this.$select = $(select)),
+          ...cleanupSelectProps(this.props)
+        })
       )
     );
   }

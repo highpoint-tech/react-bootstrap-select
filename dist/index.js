@@ -38,76 +38,83 @@ var ReactBS = (0, _react.createClass)({
   getInitialState: function getInitialState() {
     return { open: false };
   },
+  getDefaultProps: function getDefaultProps() {
+    return {
+      bs: {}
+    };
+  },
   onHTMLClick: function onHTMLClick() {
     this.setState({ open: false });
   },
   handleBsEvents: function handleBsEvents() {
-    var $select = (0, _jquery2.default)(this.select);
+    var _this = this;
+
     var eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(function (event) {
       var fn = eventsProp[prefixEvent(event)];
       if (fn === undefined) return;
-      $select.on(event + '.bs.select', function () {
+      _this.$select.on(event + '.bs.select', function () {
         return fn.apply(undefined, arguments);
       });
     });
   },
   cancelBsEvents: function cancelBsEvents() {
-    var $select = (0, _jquery2.default)(this.select);
+    var _this2 = this;
+
     var eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
     events.map(function (event) {
       var fn = eventsProp[prefixEvent(event)];
       if (fn === undefined) return;
-      $select.off(event + '.bs.select', fn);
+      _this2.$select.off(event + '.bs.select', fn);
     });
   },
   componentDidUpdate: function componentDidUpdate() {
-    var $this = (0, _jquery2.default)(this.container);
-    (0, _jquery2.default)(this.select).selectpicker('refresh');
-    var $select = $this.find('div.bootstrap-select');
-    $select.toggleClass('open', this.state.open);
+    this.$select.selectpicker('refresh');
+    var $bsSelect = this.$container.find('div.bootstrap-select');
+    $bsSelect.toggleClass('open', this.state.open);
   },
   componentWillUnmount: function componentWillUnmount() {
-    var $this = (0, _jquery2.default)(this.container);
     this.cancelBsEvents();
     (0, _jquery2.default)('html').off('click', this.onHTMLClick);
-    $this.find('button').off('click');
-    $this.find('.dropdown-menu').off('click');
+    this.$root.find('button').off('click');
+    this.$container.off('click');
   },
   componentDidMount: function componentDidMount() {
-    var _this = this;
+    var _this3 = this;
 
-    var $this = (0, _jquery2.default)(this.container);
-    var $select = (0, _jquery2.default)(this.select);
-    $select.selectpicker(this.props.bs);
-
+    this.$container = this.props.bs.container ? (0, _jquery2.default)(this.props.bs.container) : this.$root;
+    this.$select.selectpicker(this.props.bs);
     this.handleBsEvents();
 
     (0, _jquery2.default)('html').on('click', this.onHTMLClick);
 
-    $this.find('button').on('click', function (e) {
+    this.$root.find('button').on('click', function (e) {
       e.stopPropagation();
-      if ($select.is(':disabled')) return;
-      var open = !_this.state.open;
-      _this.setState({ open: open });
+      if (_this3.$select.is(':disabled')) return;
+      var open = !_this3.state.open;
+      _this3.setState({ open: open });
     });
 
-    $this.find('.dropdown-menu').on('click', 'li a', function () {
-      if (_this.props.multiple) return;
-      var open = !_this.state.open;
-      _this.setState({ open: open });
+    this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function () {
+      if (_this3.props.multiple) return;
+      var open = !_this3.state.open;
+      _this3.setState({ open: open });
     });
   },
   render: function render() {
-    var _this2 = this;
+    var _this4 = this;
 
-    return (0, _react.createElement)('div', _extends({ ref: function ref(container) {
-        return _this2.container = container;
-      } }, this.props.container), (0, _react.createElement)('select', _extends({ ref: function ref(select) {
-        return _this2.select = select;
-      } }, cleanupSelectProps(this.props))));
+    return (0, _react.createElement)('div', _extends({
+      ref: function ref(container) {
+        return _this4.$root = (0, _jquery2.default)(container);
+      }
+    }, this.props.container), (0, _react.createElement)('select', _extends({
+      ref: function ref(select) {
+        return _this4.$select = (0, _jquery2.default)(select);
+      }
+    }, cleanupSelectProps(this.props))));
   }
 });
 
