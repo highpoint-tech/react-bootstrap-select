@@ -36,8 +36,11 @@
     "type": "git",
     "url": "git+https://github.com/hp-mobile/react-bootstrap-select.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Martín Ciparelli",
+    "email": "mciparelli@gmail.com"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/hp-mobile/react-bootstrap-select/issues"
   },
