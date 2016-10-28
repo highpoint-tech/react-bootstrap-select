@@ -1,7 +1,7 @@
-import Select from '../src/index';
-import { createElement as t } from 'react';
-import { render } from 'react-dom';
-import 'bootstrap-select';
+const Select = require('..');
+const { createElement: t } = require('react');
+const { render } = require('react-dom');
+require('bootstrap-select');
 
 const el =
   t('div', null,

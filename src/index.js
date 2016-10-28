@@ -1,6 +1,7 @@
-import $ from 'jquery';
-import 'bootstrap-select';
-import React, { createElement as t, PropTypes, createClass } from 'react';
+const $ = require('jquery');
+require('bootstrap-select');
+const React = require('react');
+const { createElement: t, PropTypes, createClass } = React;
 
 const events = ['show', 'shown', 'hide', 'hidden', 'loaded', 'rendered', 'refreshed', 'changed'];
 
@@ -9,7 +10,7 @@ const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
 const prefixEvent = event => `on${capitalizeFirstLetter(event)}`;
 
 const cleanupSelectProps = obj => {
-  const newObj = { ...obj };
+  const newObj = Object.assign({}, obj);
   delete newObj.bs;
   delete newObj.container;
   delete newObj['bs-events'];
@@ -79,14 +80,12 @@ const ReactBS = createClass({
   },
   render() {
     return (
-      t('div', {
-        ref: container => (this.$root = $(container)),
-        ...this.props.container
-      },
-        t('select', {
-          ref: select => (this.$select = $(select)),
-          ...cleanupSelectProps(this.props)
-        })
+      t('div', Object.assign({
+        ref: container => (this.$root = $(container))
+      }, this.props.container),
+        t('select', Object.assign({
+          ref: select => (this.$select = $(select))
+        }, cleanupSelectProps(this.props)))
       )
     );
   }
@@ -97,4 +96,4 @@ ReactBS.propTypes = {
   'bs-events': PropTypes.objectOf(PropTypes.func)
 };
 
-export default ReactBS;
+module.exports = ReactBS;
