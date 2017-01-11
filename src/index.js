@@ -58,6 +58,10 @@ const ReactBS = createClass({
     this.$root.find('button').off('click');
     this.$container.off('click');
   },
+  toggle() {
+    const open = !this.state.open;
+    this.setState({ open });
+  },
   componentDidMount() {
     this.$container = this.props.bs.container ? $(this.props.bs.container) : this.$root;
     this.$select.selectpicker(this.props.bs);
@@ -68,14 +72,12 @@ const ReactBS = createClass({
     this.$root.find('button').on('click', e => {
       e.stopPropagation();
       if (this.$select.is(':disabled')) return;
-      const open = !this.state.open;
-      this.setState({ open });
+      this.toggle();
     });
 
     this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', () => {
       if (this.props.multiple) return;
-      const open = !this.state.open;
-      this.setState({ open });
+      this.toggle();
     });
   },
   render() {
