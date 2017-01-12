@@ -81,6 +81,7 @@ var ReactBS = (0, _react.createClass)({
     (0, _jquery2.default)('html').off('click', this.onHTMLClick);
     this.$root.find('button').off('click');
     this.$container.off('click');
+    this.$select.selectpicker('destroy');
   },
   toggle: function toggle() {
     var open = !this.state.open;

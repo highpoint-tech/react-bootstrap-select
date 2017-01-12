@@ -55,6 +55,7 @@ const ReactBS = createClass({
     $('html').off('click', this.onHTMLClick);
     this.$root.find('button').off('click');
     this.$container.off('click');
+    this.$select.selectpicker('destroy');
   },
   toggle() {
     const open = !this.state.open;
