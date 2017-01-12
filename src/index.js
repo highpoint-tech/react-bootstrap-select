@@ -48,8 +48,7 @@ const ReactBS = createClass({
   },
   componentDidUpdate() {
     this.$select.selectpicker('refresh');
-    const $bsSelect = this.$container.find('> .bootstrap-select');
-    $bsSelect.toggleClass('open', this.state.open);
+    this.$menu.toggleClass('open', this.state.open);
   },
   componentWillUnmount() {
     this.cancelBsEvents();
@@ -64,6 +63,9 @@ const ReactBS = createClass({
   componentDidMount() {
     this.$container = this.props.bs.container ? $(this.props.bs.container) : this.$root;
     this.$select.selectpicker(this.props.bs);
+    this.$menu = this.props.bs.container
+      ? this.$select.data('selectpicker').$bsContainer
+      : this.$container.find('> .bootstrap-select');
     this.handleBsEvents();
 
     $('html').on('click', this.onHTMLClick);
