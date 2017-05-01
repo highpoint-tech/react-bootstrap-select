@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _jquery = require('jquery');
@@ -17,6 +19,12 @@ var _react = require('react');
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var events = ['show', 'shown', 'hide', 'hidden', 'loaded', 'rendered', 'refreshed', 'changed'];
 
@@ -36,92 +44,119 @@ var cleanupSelectProps = function cleanupSelectProps(obj) {
   return newObj;
 };
 
-var ReactBS = (0, _react.createClass)({
-  getInitialState: function getInitialState() {
-    return { open: false };
-  },
-  getDefaultProps: function getDefaultProps() {
-    return {
-      bs: {}
-    };
-  },
-  onHTMLClick: function onHTMLClick() {
-    this.setState({ open: false });
-  },
-  handleBsEvents: function handleBsEvents() {
-    var _this = this;
+var ReactBS = function (_Component) {
+  _inherits(ReactBS, _Component);
 
-    var eventsProp = this.props['bs-events'];
-    if (eventsProp === undefined) return;
-    events.map(function (event) {
-      var fn = eventsProp[prefixEvent(event)];
-      if (fn === undefined) return;
-      _this.$select.on(event + '.bs.select', function () {
-        return fn.apply(undefined, arguments);
-      });
-    });
-  },
-  cancelBsEvents: function cancelBsEvents() {
-    var _this2 = this;
+  function ReactBS() {
+    _classCallCheck(this, ReactBS);
 
-    var eventsProp = this.props['bs-events'];
-    if (eventsProp === undefined) return;
-    events.map(function (event) {
-      var fn = eventsProp[prefixEvent(event)];
-      if (fn === undefined) return;
-      _this2.$select.off(event + '.bs.select', fn);
-    });
-  },
-  componentDidUpdate: function componentDidUpdate() {
-    this.$select.selectpicker('refresh');
-    this.$menu.toggleClass('open', this.state.open);
-  },
-  componentWillUnmount: function componentWillUnmount() {
-    this.cancelBsEvents();
-    (0, _jquery2.default)('html').off('click', this.onHTMLClick);
-    this.$root.find('button').off('click');
-    this.$container.off('click');
-    this.$select.selectpicker('destroy');
-  },
-  toggle: function toggle() {
-    var open = !this.state.open;
-    this.setState({ open: open });
-  },
-  componentDidMount: function componentDidMount() {
-    var _this3 = this;
+    var _this = _possibleConstructorReturn(this, (ReactBS.__proto__ || Object.getPrototypeOf(ReactBS)).call(this));
 
-    this.$container = this.props.bs.container ? (0, _jquery2.default)(this.props.bs.container) : this.$root;
-    this.$select.selectpicker(this.props.bs);
-    this.$menu = this.props.bs.container ? this.$select.data('selectpicker').$bsContainer : this.$container.find('> .bootstrap-select');
-    this.handleBsEvents();
-
-    (0, _jquery2.default)('html').on('click', this.onHTMLClick);
-
-    this.$root.find('button').on('click', function (e) {
-      e.stopPropagation();
-      if (_this3.$select.is(':disabled')) return;
-      _this3.toggle();
-    });
-
-    this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function () {
-      if (_this3.props.multiple) return;
-      _this3.toggle();
-    });
-  },
-  render: function render() {
-    var _this4 = this;
-
-    return (0, _react.createElement)('div', _extends({
-      ref: function ref(container) {
-        return _this4.$root = (0, _jquery2.default)(container);
-      }
-    }, this.props.container), (0, _react.createElement)('select', _extends({
-      ref: function ref(select) {
-        return _this4.$select = (0, _jquery2.default)(select);
-      }
-    }, cleanupSelectProps(this.props))));
+    _this.state = { open: false };
+    _this.onHTMLClick = _this.onHTMLClick.bind(_this);
+    return _this;
   }
-});
+
+  _createClass(ReactBS, [{
+    key: 'onHTMLClick',
+    value: function onHTMLClick() {
+      this.setState({ open: false });
+    }
+  }, {
+    key: 'handleBsEvents',
+    value: function handleBsEvents() {
+      var _this2 = this;
+
+      var eventsProp = this.props['bs-events'];
+      if (eventsProp === undefined) return;
+      events.map(function (event) {
+        var fn = eventsProp[prefixEvent(event)];
+        if (fn === undefined) return;
+        _this2.$select.on(event + '.bs.select', function () {
+          return fn.apply(undefined, arguments);
+        });
+      });
+    }
+  }, {
+    key: 'cancelBsEvents',
+    value: function cancelBsEvents() {
+      var _this3 = this;
+
+      var eventsProp = this.props['bs-events'];
+      if (eventsProp === undefined) return;
+      events.map(function (event) {
+        var fn = eventsProp[prefixEvent(event)];
+        if (fn === undefined) return;
+        _this3.$select.off(event + '.bs.select', fn);
+      });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      this.$select.selectpicker('refresh');
+      this.$menu.toggleClass('open', this.state.open);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.cancelBsEvents();
+      (0, _jquery2.default)('html').off('click', this.onHTMLClick);
+      this.$root.find('button').off('click');
+      this.$container.off('click');
+      this.$select.selectpicker('destroy');
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      var open = !this.state.open;
+      this.setState({ open: open });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this4 = this;
+
+      this.$container = this.props.bs.container ? (0, _jquery2.default)(this.props.bs.container) : this.$root;
+      this.$select.selectpicker(this.props.bs);
+      this.$menu = this.props.bs.container ? this.$select.data('selectpicker').$bsContainer : this.$container.find('> .bootstrap-select');
+      this.handleBsEvents();
+
+      (0, _jquery2.default)('html').on('click', this.onHTMLClick);
+
+      this.$root.find('button').on('click', function (e) {
+        e.stopPropagation();
+        if (_this4.$select.is(':disabled')) return;
+        _this4.toggle();
+      });
+
+      this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function () {
+        if (_this4.props.multiple) return;
+        _this4.toggle();
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      return (0, _react.createElement)('div', _extends({
+        ref: function ref(container) {
+          return _this5.$root = (0, _jquery2.default)(container);
+        }
+      }, this.props.container), (0, _react.createElement)('select', _extends({
+        ref: function ref(select) {
+          return _this5.$select = (0, _jquery2.default)(select);
+        }
+      }, cleanupSelectProps(this.props))));
+    }
+  }]);
+
+  return ReactBS;
+}(_react.Component);
+
+ReactBS.defaultProps = {
+  bs: {}
+};
 
 ReactBS.propTypes = {
   bs: _react.PropTypes.object,

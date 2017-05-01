@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import 'bootstrap-select';
-import React, { createElement as t, PropTypes, createClass } from 'react';
+import React, { createElement as t, PropTypes, Component } from 'react';
 
 const events = ['show', 'shown', 'hide', 'hidden', 'loaded', 'rendered', 'refreshed', 'changed'];
 
@@ -16,18 +16,15 @@ const cleanupSelectProps = obj => {
   return newObj;
 };
 
-const ReactBS = createClass({
-  getInitialState() {
-    return { open: false };
-  },
-  getDefaultProps() {
-    return {
-      bs: {}
-    };
-  },
+class ReactBS extends Component {
+  constructor() {
+    super();
+    this.state = { open: false };
+    this.onHTMLClick = this.onHTMLClick.bind(this);
+  }
   onHTMLClick() {
     this.setState({ open: false });
-  },
+  }
   handleBsEvents() {
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
@@ -36,7 +33,7 @@ const ReactBS = createClass({
       if (fn === undefined) return;
       this.$select.on(`${event}.bs.select`,(...args) => fn(...args));
     });
-  },
+  }
   cancelBsEvents() {
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
@@ -45,22 +42,22 @@ const ReactBS = createClass({
       if (fn === undefined) return;
       this.$select.off(`${event}.bs.select`, fn);
     });
-  },
+  }
   componentDidUpdate() {
     this.$select.selectpicker('refresh');
     this.$menu.toggleClass('open', this.state.open);
-  },
+  }
   componentWillUnmount() {
     this.cancelBsEvents();
     $('html').off('click', this.onHTMLClick);
     this.$root.find('button').off('click');
     this.$container.off('click');
     this.$select.selectpicker('destroy');
-  },
+  }
   toggle() {
     const open = !this.state.open;
     this.setState({ open });
-  },
+  }
   componentDidMount() {
     this.$container = this.props.bs.container ? $(this.props.bs.container) : this.$root;
     this.$select.selectpicker(this.props.bs);
@@ -81,7 +78,7 @@ const ReactBS = createClass({
       if (this.props.multiple) return;
       this.toggle();
     });
-  },
+  }
   render() {
     return (
       t('div', {
@@ -95,7 +92,11 @@ const ReactBS = createClass({
       )
     );
   }
-});
+}
+
+ReactBS.defaultProps = {
+  bs: {}
+};
 
 ReactBS.propTypes = {
   bs: PropTypes.object,
