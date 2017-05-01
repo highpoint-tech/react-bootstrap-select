@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import 'bootstrap-select';
-import React, { createElement as t, PropTypes, Component } from 'react';
+import React, { createElement as t, Component } from 'react';
+import PropTypes from 'prop-types';
 
 const events = ['show', 'shown', 'hide', 'hidden', 'loaded', 'rendered', 'refreshed', 'changed'];
 

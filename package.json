@@ -48,6 +48,7 @@
     ]
   },
   "dependencies": {
-    "bootstrap-select": "^1.11.2"
+    "bootstrap-select": "^1.11.2",
+    "prop-types": "^15.5.8"
   }
 }
