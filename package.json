@@ -22,34 +22,42 @@
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
+    "babel-eslint": "^8.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "^1.5.1",
     "babelify": "^7.3.0",
     "budo": "^9.2.1",
+    "copyfiles": "^2.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-mciparelli": "^0.10.0",
+    "eslint-config-prettier": "^2.9.0",
+    "husky": "^0.14.3",
     "jquery": "^3.1.1",
+    "lint-staged": "^7.0.4",
     "mkdirp": "^0.5.1",
+    "prettier": "^1.12.1",
     "react": "^15.3.2",
-    "react-bootstrap": "^0.30.5",
     "react-dom": "^15.3.2",
-    "recompose": "^0.23.5"
+    "recompose": "^0.27.0"
   },
   "peerDependencies": {
     "jquery": ">=2.0.0",
     "react": ">=0.14.0",
-    "react-bootstrap": ">=0.27.0",
     "react-dom": ">=0.14.0"
   },
   "scripts": {
     "prebuild": "mkdirp dist",
     "build": "babel src/index.js --out-file dist/index.js",
+    "lint": "eslint {dev,src}/**/*.js",
+    "precommit": "lint-staged",
+    "experiment":
+      "budo experiment/index.js --dir experiment --serve bundle.js --live --open",
+    "preexperiment":
+      "copyfiles node_modules/bootstrap-select/dist/css/bootstrap-select.min.css experiment --flat",
     "start": "npm run experiment",
-    "preexperiment": "cp node_modules/bootstrap-select/dist/css/bootstrap-select.min.css experiment",
-    "experiment": "budo experiment/index.js --dir experiment --serve bundle.js --live --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "browserify": {
-    "transform": [
-      "babelify"
-    ]
+    "transform": ["babelify"]
   }
 }
