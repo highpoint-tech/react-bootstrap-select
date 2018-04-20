@@ -1,9 +1,18 @@
-import $ from 'jquery';
 import 'bootstrap-select';
-import React, { createElement as t, Component } from 'react';
+import $ from 'jquery';
 import PropTypes from 'prop-types';
+import { createElement as t, Component } from 'react';
 
-const events = ['show', 'shown', 'hide', 'hidden', 'loaded', 'rendered', 'refreshed', 'changed'];
+const events = [
+  'show',
+  'shown',
+  'hide',
+  'hidden',
+  'loaded',
+  'rendered',
+  'refreshed',
+  'changed'
+];
 
 const capitalizeFirstLetter = str => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -24,21 +33,21 @@ class ReactBS extends Component {
     this.onHTMLClick = this.onHTMLClick.bind(this);
   }
   onHTMLClick() {
-    this.setState({ open: false });
+    if (this.state.open) this.setState({ open: false });
   }
   handleBsEvents() {
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
-    events.map(event => {
+    events.forEach(event => {
       const fn = eventsProp[prefixEvent(event)];
       if (fn === undefined) return;
-      this.$select.on(`${event}.bs.select`,(...args) => fn(...args));
+      this.$select.on(`${event}.bs.select`, (...args) => fn(...args));
     });
   }
   cancelBsEvents() {
     const eventsProp = this.props['bs-events'];
     if (eventsProp === undefined) return;
-    events.map(event => {
+    events.forEach(event => {
       const fn = eventsProp[prefixEvent(event)];
       if (fn === undefined) return;
       this.$select.off(`${event}.bs.select`, fn);
@@ -60,7 +69,9 @@ class ReactBS extends Component {
     this.setState({ open });
   }
   componentDidMount() {
-    this.$container = this.props.bs.container ? $(this.props.bs.container) : this.$root;
+    this.$container = this.props.bs.container
+      ? $(this.props.bs.container)
+      : this.$root;
     this.$select.selectpicker(this.props.bs);
     this.$menu = this.props.bs.container
       ? this.$select.data('selectpicker').$bsContainer
@@ -75,22 +86,30 @@ class ReactBS extends Component {
       this.toggle();
     });
 
-    this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', () => {
-      if (this.props.multiple) return;
-      this.toggle();
-    });
+    this.$container.on(
+      'click',
+      ' > .bootstrap-select > .dropdown-menu > ul > li > a',
+      () => {
+        if (this.props.multiple) return;
+        this.toggle();
+      }
+    );
   }
   render() {
-    return (
-      t('div', {
-        ref: container => (this.$root = $(container)),
+    return t(
+      'div',
+      {
+        ref: container => {
+          this.$root = $(container);
+        },
         ...this.props.container
       },
-        t('select', {
-          ref: select => (this.$select = $(select)),
-          ...cleanupSelectProps(this.props)
-        })
-      )
+      t('select', {
+        ref: select => {
+          this.$select = $(select);
+        },
+        ...cleanupSelectProps(this.props)
+      })
     );
   }
 }

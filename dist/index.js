@@ -8,19 +8,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+require('bootstrap-select');
+
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-require('bootstrap-select');
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = require('react');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64,7 +62,7 @@ var ReactBS = function (_Component) {
   _createClass(ReactBS, [{
     key: 'onHTMLClick',
     value: function onHTMLClick() {
-      this.setState({ open: false });
+      if (this.state.open) this.setState({ open: false });
     }
   }, {
     key: 'handleBsEvents',
@@ -73,7 +71,7 @@ var ReactBS = function (_Component) {
 
       var eventsProp = this.props['bs-events'];
       if (eventsProp === undefined) return;
-      events.map(function (event) {
+      events.forEach(function (event) {
         var fn = eventsProp[prefixEvent(event)];
         if (fn === undefined) return;
         _this2.$select.on(event + '.bs.select', function () {
@@ -88,7 +86,7 @@ var ReactBS = function (_Component) {
 
       var eventsProp = this.props['bs-events'];
       if (eventsProp === undefined) return;
-      events.map(function (event) {
+      events.forEach(function (event) {
         var fn = eventsProp[prefixEvent(event)];
         if (fn === undefined) return;
         _this3.$select.off(event + '.bs.select', fn);
@@ -145,11 +143,11 @@ var ReactBS = function (_Component) {
 
       return (0, _react.createElement)('div', _extends({
         ref: function ref(container) {
-          return _this5.$root = (0, _jquery2.default)(container);
+          _this5.$root = (0, _jquery2.default)(container);
         }
       }, this.props.container), (0, _react.createElement)('select', _extends({
         ref: function ref(select) {
-          return _this5.$select = (0, _jquery2.default)(select);
+          _this5.$select = (0, _jquery2.default)(select);
         }
       }, cleanupSelectProps(this.props))));
     }
