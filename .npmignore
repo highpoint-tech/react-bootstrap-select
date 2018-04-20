@@ -3,6 +3,9 @@
 .gitattributes
 .lintstagedrc
 .prettierrc
+*.lock
+*.log
 
 experiment
+.idea
 src

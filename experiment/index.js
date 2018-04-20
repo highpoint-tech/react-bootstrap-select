@@ -3,7 +3,7 @@ import 'bootstrap-select';
 import { createElement as t } from 'react';
 import { render } from 'react-dom';
 import { compose, withState, withProps, mapProps } from 'recompose';
-import Select from '../dist/index';
+import Select from '../dist';
 
 const enhance = compose(
   withState('value', 'set', 2),

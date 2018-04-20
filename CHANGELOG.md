@@ -1,3 +1,6 @@
+# v0.2.2
+* Prune package contents
+
 # v0.2.1
 * Only set closed state on click if currently open
 
