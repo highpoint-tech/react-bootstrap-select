@@ -49,11 +49,12 @@
     "prebuild": "mkdirp dist",
     "build": "babel src/index.js --out-file dist/index.js",
     "lint": "eslint {dev,src}/**/*.js",
-    "precommit": "lint-staged",
     "experiment":
       "budo experiment/index.js --dir experiment --serve bundle.js --live --open",
     "preexperiment":
       "copyfiles node_modules/bootstrap-select/dist/css/bootstrap-select.min.css experiment --flat",
+    "precommit": "lint-staged",
+    "prepublishOnly": "npm run build",
     "start": "npm run experiment",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
