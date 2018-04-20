@@ -2,7 +2,24 @@
   "name": "react-bootstrap-select",
   "version": "0.2.0",
   "description": "react bootstrap select",
+  "homepage": "https://github.com/hp-mobile/react-bootstrap-select#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hp-mobile/react-bootstrap-select.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hp-mobile/react-bootstrap-select/issues"
+  },
+  "author": {
+    "name": "Martín Ciparelli",
+    "email": "mciparelli@gmail.com"
+  },
+  "license": "MIT",
   "main": "dist/index.js",
+  "dependencies": {
+    "bootstrap-select": "^1.11.2",
+    "prop-types": "^15.5.8"
+  },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
@@ -30,26 +47,9 @@
     "experiment": "budo experiment/index.js --dir experiment --serve bundle.js --live --open",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hp-mobile/react-bootstrap-select.git"
-  },
-  "author": {
-    "name": "Martín Ciparelli",
-    "email": "mciparelli@gmail.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hp-mobile/react-bootstrap-select/issues"
-  },
-  "homepage": "https://github.com/hp-mobile/react-bootstrap-select#readme",
   "browserify": {
     "transform": [
       "babelify"
     ]
-  },
-  "dependencies": {
-    "bootstrap-select": "^1.11.2",
-    "prop-types": "^15.5.8"
   }
 }
