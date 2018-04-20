@@ -1,3 +1,6 @@
+# v0.2.3
+* Do not use bootstrap-select v1.13.0 or above because it breaks compatibility (requires Bootstrap's JavaScript)
+
 # v0.2.2
 * Prune package contents
 

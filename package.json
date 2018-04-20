@@ -1,6 +1,6 @@
 {
   "name": "@highpoint/react-bootstrap-select",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "react bootstrap select",
   "homepage": "https://github.com/hp-mobile/react-bootstrap-select#readme",
   "repository": {
@@ -17,7 +17,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "dependencies": {
-    "bootstrap-select": "^1.11.2",
+    "bootstrap-select": "~1.12.4",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
