@@ -86,14 +86,22 @@ class ReactBS extends React.Component {
       this.toggle();
     });
 
-    this.$container.on(
-      'click',
-      ' > .bootstrap-select > .dropdown-menu > ul > li > a',
-      () => {
-        if (this.props.multiple) return;
-        this.toggle();
-      }
-    );
+    this.$container
+      .on(
+        'click',
+        ' > .bootstrap-select > .dropdown-menu > ul > li > a',
+        () => {
+          if (this.props.multiple) return;
+          this.toggle();
+        }
+      )
+      .on(
+        'keydown',
+        ' > .bootstrap-select > .dropdown-menu > ul > li > a',
+        e => {
+          if (e.key === ' ' || e.key === 'Enter') $(e.target).click();
+        }
+      );
   }
   render() {
     return (

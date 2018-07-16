@@ -1,3 +1,6 @@
+# v0.2.4
+* Make Enter & Space keypresses trigger Click handler
+
 # v0.2.3
 * Do not use bootstrap-select v1.13.0 or above because it breaks compatibility (requires Bootstrap's JavaScript)
 

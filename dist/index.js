@@ -136,6 +136,8 @@ var ReactBS = function (_React$Component) {
       this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function () {
         if (_this4.props.multiple) return;
         _this4.toggle();
+      }).on('keydown', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function (e) {
+        if (e.key === ' ' || e.key === 'Enter') (0, _jquery2.default)(e.target).click();
       });
     }
   }, {
