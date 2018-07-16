@@ -1,7 +1,7 @@
 import 'bootstrap-select';
 import $ from 'jquery';
 import PropTypes from 'prop-types';
-import { createElement as t, Component } from 'react';
+import React from 'react';
 
 const events = [
   'show',
@@ -26,7 +26,7 @@ const cleanupSelectProps = obj => {
   return newObj;
 };
 
-class ReactBS extends Component {
+class ReactBS extends React.Component {
   constructor() {
     super();
     this.state = { open: false };
@@ -96,20 +96,20 @@ class ReactBS extends Component {
     );
   }
   render() {
-    return t(
-      'div',
-      {
-        ref: container => {
+    return (
+      <div
+        ref={container => {
           this.$root = $(container);
-        },
-        ...this.props.container
-      },
-      t('select', {
-        ref: select => {
-          this.$select = $(select);
-        },
-        ...cleanupSelectProps(this.props)
-      })
+        }}
+        {...this.props.container}
+      >
+        <select
+          ref={select => {
+            this.$select = $(select);
+          }}
+          {...cleanupSelectProps(this.props)}
+        />
+      </div>
     );
   }
 }
