@@ -7,38 +7,36 @@ You'll need them in your project for this component to work properly and look pr
 
 ## installation
 
-`npm i react-bootstrap-select@hp-mobile/react-bootstrap-select`  
-
+`yarn add @highpoint/react-bootstrap-select`
 
 ## usage
 
-```js
+```javascript
 import Select from 'react-bootstrap-select';
-import { createElement as t } from 'react';
 import { render } from 'react-dom';
 import 'bootstrap-select';
 
-const el = t(Select, {
-  bs: {
+const Element = <Select
+  bs={{
     // use bs prop to pass options to the bootstrap-select plugin
     mobile: true
-  },
-  'bs-events': {
+  }}
+  bs-events={{
     onChanged: ev => console.log('changed!', ev.target.value)
-  },
-  // pass props for the container
-  container: {
+  }}
+  container={{
+    // pass props for the container
     className: 'bootstrap-select-container'
-  },
+  }}
   // rest of the props go to the select
-  name: 'my-select',
-  multiple: true
-},
-  t('option', { value: 1 }, '1 Minute'),
-  t('option', { value: 2 }, '2 Minutes')
-);
+  name='my-select'
+  multiple
+>
+  <option value={1}>1 Minute</option>
+  <option value={2}>2 Minutes</option>
+</Select>;
 
-render(el, document.querySelector('.app-container'));
+render(<Element />, document.querySelector('.app-container'));
 ```
 
 Refer to [experiment]() for a full example of this component working.
@@ -48,13 +46,13 @@ You can run it with `npm run experiment`.
 
 Pass any of the following events to the `bs-events` prop:
 
-- `onShow`
-- `onShown`
-- `onHide`
-- `onHidden`
-- `onLoaded`
-- `onRendered`
-- `onRefreshed`
-- `onChanged`
+* `onShow`
+* `onShown`
+* `onHide`
+* `onHidden`
+* `onLoaded`
+* `onRendered`
+* `onRefreshed`
+* `onChanged`
 
 Documentation [here](https://silviomoreto.github.io/bootstrap-select/options/#events)
