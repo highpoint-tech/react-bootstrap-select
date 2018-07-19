@@ -1,5 +1,5 @@
 {
-  "extends": ["mciparelli", "prettier"],
+  "extends": ["mciparelli", "prettier", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -8,5 +8,24 @@
   },
   "env": {
     "browser": true
+  },
+  "rules": {
+    "class-methods-use-this": [
+      2,
+      {
+        "exceptMethods": [
+          "componentDidMount",
+          "componentDidUpdate",
+          "componentWillMount",
+          "componentWillReceiveProps",
+          "componentWillUnmount",
+          "componentWillUpdate",
+          "render",
+          "shouldComponentUpdate"
+        ]
+      }
+    ],
+    "react/no-unused-prop-types": 2,
+    "react/prop-types": 1
   }
 }
