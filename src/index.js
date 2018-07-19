@@ -59,7 +59,9 @@ class ReactBS extends React.Component {
   }
   componentWillUnmount() {
     this.cancelBsEvents();
-    $('html').off('click.react-bootstrap-select', this.onHTMLClick);
+    $(document)
+      .off('click.react-bootstrap-select')
+      .off('keyup.react-bootstrap-select');
     this.$root.find('button').off('click');
     this.$container.off('click');
     this.$select.selectpicker('destroy');
@@ -78,7 +80,11 @@ class ReactBS extends React.Component {
       : this.$container.find('> .bootstrap-select');
     this.handleBsEvents();
 
-    $('html').on('click.react-bootstrap-select', this.onHTMLClick);
+    $(document)
+      .on('click.react-bootstrap-select', this.onHTMLClick)
+      .on('keyup.react-bootstrap-select', e => {
+        if (e.key === 'Escape') this.onHTMLClick();
+      });
 
     this.$root.find('button').on('click', e => {
       e.stopPropagation();
