@@ -54,8 +54,6 @@
     "lint": "eslint {experiment,src}/**/*.js",
     "experiment":
       "budo experiment/src/index.js --dir experiment --serve bundle.js --live --open",
-    "preexperiment":
-      "copyfiles node_modules/bootstrap-select/dist/css/bootstrap-select.min.css experiment --flat",
     "precommit": "lint-staged",
     "prepublishOnly": "npm run build",
     "start": "npm run experiment",

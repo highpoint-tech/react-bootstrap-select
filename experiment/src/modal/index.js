@@ -21,7 +21,7 @@ class SelectModal extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.toggle}>Toggle Modal</button>
+        <Button onClick={this.toggle} bsStyle="primary">Toggle Modal</Button>
         <Modal show={this.state.show} onHide={this.toggle}>
           <Modal.Header closeButton>
             <Modal.Title>Select</Modal.Title>

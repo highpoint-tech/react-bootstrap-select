@@ -24,7 +24,7 @@ class El extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: '1rem'}}>
         <Select
           id="v1"
           value={this.state.v1}
