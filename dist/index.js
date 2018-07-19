@@ -133,10 +133,12 @@ var ReactBS = function (_React$Component) {
         _this4.toggle();
       });
 
-      this.$container.on('click', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function () {
+      var itemSelector = '> .bootstrap-select > .dropdown-menu > ul > li > a';
+
+      this.$container.on('click', itemSelector, function () {
         if (_this4.props.multiple) return;
         _this4.toggle();
-      }).on('keydown', ' > .bootstrap-select > .dropdown-menu > ul > li > a', function (e) {
+      }).on('keyup', itemSelector, function (e) {
         if (e.key === ' ' || e.key === 'Enter') (0, _jquery2.default)(e.target).click();
       });
     }
