@@ -1,3 +1,8 @@
+# v0.2.5
+* Switch listeners from `keydown` to `keyup`
+* Make Escape keypress close select
+* Namespace events to unmounting will only affect the current select
+
 # v0.2.4
 * Make Enter & Space keypresses trigger Click handler
 

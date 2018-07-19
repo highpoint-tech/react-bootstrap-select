@@ -48,15 +48,23 @@ var cleanupSelectProps = function cleanupSelectProps(obj) {
   return newObj;
 };
 
+var guid = function guid() {
+  var s4 = function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  };
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+};
+
 var ReactBS = function (_React$Component) {
   _inherits(ReactBS, _React$Component);
 
-  function ReactBS() {
+  function ReactBS(props, context) {
     _classCallCheck(this, ReactBS);
 
-    var _this = _possibleConstructorReturn(this, (ReactBS.__proto__ || Object.getPrototypeOf(ReactBS)).call(this));
+    var _this = _possibleConstructorReturn(this, (ReactBS.__proto__ || Object.getPrototypeOf(ReactBS)).call(this, props, context));
 
-    _this.state = { open: false };
+    var id = props.id || guid();
+    _this.state = { id: id, open: false };
     _this.onHTMLClick = _this.onHTMLClick.bind(_this);
     return _this;
   }
@@ -104,7 +112,7 @@ var ReactBS = function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.cancelBsEvents();
-      (0, _jquery2.default)('html').off('click', this.onHTMLClick);
+      (0, _jquery2.default)(document).off('click.rbs-' + this.state.id).off('keyup.rbs-' + this.state.id);
       this.$root.find('button').off('click');
       this.$container.off('click');
       this.$select.selectpicker('destroy');
@@ -125,7 +133,9 @@ var ReactBS = function (_React$Component) {
       this.$menu = this.props.bs.container ? this.$select.data('selectpicker').$bsContainer : this.$container.find('> .bootstrap-select');
       this.handleBsEvents();
 
-      (0, _jquery2.default)('html').on('click', this.onHTMLClick);
+      (0, _jquery2.default)(document).on('click.rbs-' + this.state.id, this.onHTMLClick).on('keyup.rbs-' + this.state.id, function (e) {
+        if (e.key === 'Escape') _this4.onHTMLClick();
+      });
 
       this.$root.find('button').on('click', function (e) {
         e.stopPropagation();
@@ -172,7 +182,10 @@ ReactBS.defaultProps = {
 
 ReactBS.propTypes = {
   bs: _propTypes2.default.object,
-  'bs-events': _propTypes2.default.objectOf(_propTypes2.default.func)
+  'bs-events': _propTypes2.default.objectOf(_propTypes2.default.func),
+  container: _propTypes2.default.object,
+  id: _propTypes2.default.string,
+  multiple: _propTypes2.default.bool
 };
 
 exports.default = ReactBS;
