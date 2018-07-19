@@ -26,10 +26,19 @@ const cleanupSelectProps = obj => {
   return newObj;
 };
 
+const guid = () => {
+  const s4 = () =>
+    Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+};
+
 class ReactBS extends React.Component {
-  constructor() {
-    super();
-    this.state = { open: false };
+  constructor(props, context) {
+    super(props, context);
+    const id = props.id || guid();
+    this.state = { id, open: false };
     this.onHTMLClick = this.onHTMLClick.bind(this);
   }
   onHTMLClick() {
@@ -60,8 +69,8 @@ class ReactBS extends React.Component {
   componentWillUnmount() {
     this.cancelBsEvents();
     $(document)
-      .off('click.react-bootstrap-select')
-      .off('keyup.react-bootstrap-select');
+      .off(`click.rbs-${this.state.id}`)
+      .off(`keyup.rbs-${this.state.id}`);
     this.$root.find('button').off('click');
     this.$container.off('click');
     this.$select.selectpicker('destroy');
@@ -81,8 +90,8 @@ class ReactBS extends React.Component {
     this.handleBsEvents();
 
     $(document)
-      .on('click.react-bootstrap-select', this.onHTMLClick)
-      .on('keyup.react-bootstrap-select', e => {
+      .on(`click.rbs-${this.state.id}`, this.onHTMLClick)
+      .on(`keyup.rbs-${this.state.id}`, e => {
         if (e.key === 'Escape') this.onHTMLClick();
       });
 
@@ -128,7 +137,10 @@ ReactBS.defaultProps = {
 
 ReactBS.propTypes = {
   bs: PropTypes.object,
-  'bs-events': PropTypes.objectOf(PropTypes.func)
+  'bs-events': PropTypes.objectOf(PropTypes.func),
+  container: PropTypes.object,
+  id: PropTypes.string,
+  multiple: PropTypes.bool
 };
 
 export default ReactBS;
